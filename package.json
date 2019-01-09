@@ -1,0 +1,32 @@
+{
+  "name": "simple-task-manager",
+  "version": "1.0.0",
+  "description": "simplest team task manager",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mysql": "^2.16.0",
+    "sqlite3": "^4.0.4",
+    "vue": "^2.5.21"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nicolasiac/simple-task-manager.git"
+  },
+  "keywords": [
+    "task",
+    "manager",
+    "team",
+    "project"
+  ],
+  "author": "nicolasiac",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nicolasiac/simple-task-manager/issues"
+  },
+  "homepage": "https://github.com/nicolasiac/simple-task-manager#readme"
+}
