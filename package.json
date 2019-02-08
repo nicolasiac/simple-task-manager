@@ -4,7 +4,11 @@
   "description": "simplest team task manager",
   "main": "app.js",
   "dependencies": {
+    "bcrypt": "^2.0.0",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
+    "jsonwebtoken": "^8.2.1",
     "mysql": "^2.16.0",
     "sqlite3": "^4.0.4",
     "vue": "^2.5.21"
