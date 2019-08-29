@@ -113,6 +113,47 @@ app.post('/login', function(req, res) {
   });
 });
 
+app.post('/task', middleware.checkToken, function(req, res) {
+  if (isEmpty(req.body.taskid)) {
+    let sql = `INSERT INTO Tasks(category_id,taskname,description) VALUES(?,?,?)`;
+    runDBRun(
+      sql,
+      [req.body.category_id, req.body.taskname, req.body.description],
+      function(err) {
+        if (err) {
+          throw err;
+        } else {
+          return res.json({
+            status: true,
+            message: 'Task Created'
+          });
+        }
+      }
+    );
+  } else {
+    let sql = `UPDATE Tasks SET category_id = ? ,taskname = ?, description = ? WHERE taskid= ?`;
+    runDBRun(
+      sql,
+      [
+        req.body.category_id,
+        req.body.taskname,
+        req.body.description,
+        req.body.taskid
+      ],
+      function(err) {
+        if (err) {
+          throw err;
+        } else {
+          return res.json({
+            status: true,
+            message: 'Task Updated'
+          });
+        }
+      }
+    );
+  }
+});
+
 app.get('/data', middleware.checkToken, function(req, res) {
   let sql = `select * From Categories`;
 

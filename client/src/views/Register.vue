@@ -185,7 +185,7 @@ export default {
               localStorage.setItem("user", JSON.stringify(res.data.user));
               // now send the user to the next route
               this.$router.push({
-                name: "Dashboard"
+                name: "main"
               });
             } else {
               this.status = res.data.message;
@@ -214,7 +214,7 @@ export default {
 
             // now send the user to the next route
             this.$router.push({
-              name: "Dashboard"
+              name: "main"
             });
           } 
           else {

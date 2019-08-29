@@ -83,50 +83,70 @@
           </th>
         </tr>
       </thead>
-      <tbody v-for="item in items">
+      <tbody v-for="item in items" :key="item.categoryid">
         <tr class="grouplabel">
-          <th colspan="6">{{ item.categoryname }} <button v-on:click="addNewTask(item)">Add+</button></th>
+          <th colspan="6">
+            {{ item.categoryname }}
+            <button v-on:click="addNewTask(item)">Add+</button>
+            <Task
+              v-bind:category_id="item.categoryid"
+              @taskSaved="taskSaved"
+              :class="{hidden:item.categoryid !== selected}"
+            ></Task>
+          </th>
         </tr>
-        <tr v-for="task in item.Tasks">{{task.taskname}}</tr>
+        <tr v-for="task in item.Tasks" :key="task.taskid">{{task.taskname}}</tr>
       </tbody>
     </table>
   </div>
 </template>
- <style>  
-        .grouplabel {
-            background-color: #007bff;
-            color: #fff;
-            text-align: center;
-        }
-    </style>
+ <style>
+.hidden {
+  display: none;
+}
+.grouplabel {
+  background-color: #007bff;
+  color: #fff;
+  text-align: center;
+}
+</style>
 <script>
+import Task from "@/components/Task.vue";
 import axios from "axios";
 
 export default {
   name: "Register",
-  components: {},
+  components: { Task },
   data() {
     return {
+      selected: undefined,
       items: []
     };
   },
   methods: {
-    addNewTask: function(category){
-      
+    addNewTask: function(category) {
+      this.selected = category.categoryid;
+    },
+    taskSaved: function() {
+      this.selected = "";
+      this.loadData();
+    },
+    loadData: function() {
+      axios
+        .get(`http://localhost:3128/data`, {
+          headers: { "x-access-token": localStorage.getItem("token") }
+        })
+        .then(res => {
+          if (res.data.status == true) {
+            this.items = res.data.items;
+          } else {
+            console.log(res.data.message);
+          }
+        });
     }
   },
   mounted() {
-    axios
-      .get(`http://localhost:3128/data`, {
-        headers: { "x-access-token": localStorage.getItem("token") }
-      })
-      .then(res => {
-        if (res.data.status == true) {
-          this.items = res.data.items;
-        } else {
-          //this.status = res.data.message;
-        }
-      });
+    this.loadData();
   }
 };
 </script>
